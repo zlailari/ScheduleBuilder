@@ -53,6 +53,16 @@ function scheduleViewModel() {
         { time: 2200 }
     ]
 }
+
+function lookup(CRN) {
+    for (var i=0; i<data.length; i++) {
+        if (data[i].CRN == CRN) {
+            return data[i]
+        }
+    }
+    return 'NONE'
+}
+
 function course(title, id, startTime, endTime, days) {
     var self = this;
     self.title = ko.observable(title);
