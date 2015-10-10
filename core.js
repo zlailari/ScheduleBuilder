@@ -88,6 +88,9 @@ $(document).ready(function () {
         closeForm();
     });
 
+    $(document).on('click', '#aboutPage', function () {
+        window.location = "./about.html";
+    });
 });
 function readForm() {
     var courseTitle = $('#courseTitle').val();

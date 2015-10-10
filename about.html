@@ -1,0 +1,56 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>About</title>
+    <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="knockout-3.2.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="core.css" />
+    <link rel="stylesheet" type="text/css" href="about.css" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+</head>
+<body>
+    <div id="header" class="Crimson">
+        <div id="schedule"><i class="material-icons">home</i></div>
+        <div id="schedule">Schedule Builder</div>
+        <div id="about">About</div>
+    </div>
+    <div class="about">
+        <h1>About</h1>
+        <p>We made ScheduleBuilder during Local Hack Day 2015 at FIT</p>
+        <p>ScheduleBuilder helps students develop their optimal schedule by
+        calculating all the possibilities and displaying then in a easy to 
+        digest manner</p>
+        <h3>Meet the Team!</h3>
+        <div class="profiles">
+            <a href="http://my.fit.edu/~qsong2008/" target="_blank">
+                <div class="person">
+                    <img src="images/song.png">
+                    <h3>Song Qin</h3>
+                </div>
+            </a>
+            <a href="http://my.fit.edu/~cwoodle2014/" target="_blank">
+                <div class="person">
+                    <img src="images/chris.jpg">
+                    <h3>Chris Woodle</h3>
+                </div>
+            </a>
+            <a href="http://lailari.me" target="_blank">
+                <div class="person">
+                    <img src="images/zeev.png">
+                    <h3>Ze'ev Lailari</h2>
+                </div>
+            </a>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '#schedule', function () {
+                console.log('click');
+                window.location = "./index.html"; 
+            });
+        });
+    </script>
+</body>
+</html>
