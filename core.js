@@ -1,6 +1,9 @@
 "use strict";
-var cvm = new courseViewModel();
+var cvm = new scheduleViewModel();
 var colorIndex = 0;
+var formOpen = ko.observable(false);
+var schedules = ko.observableArray();
+
 var colors = colors = [
         { color: "Cobalt" },
         { color: "Crimson" },
@@ -11,22 +14,21 @@ var colors = colors = [
         { color: "Green" },
         { color: "Red" },
         { color: "Steel" }
-
-
 ]
-function courseViewModel() {
+
+function scheduleViewModel() {
     var self = this;
     self.courses = ko.observableArray();
     self.scalingFactor = ko.observable();
     self.scalingFactor(30);
     self.days = [
-        { day: "Monday", abb: "M" },
-        { day: "Tuesday", abb: "T" },
-        { day: "Wednesday", abb: "W" },
-        { day: "Thursday", abb: "R" },
-        { day: "Friday", abb: "F" },
-        { day: "Saturday", abb: "S" },
-        {day : "Sunday", abb:"X"}
+        { day: "Mon", abb: "M" },
+        { day: "Tue", abb: "T" },
+        { day: "Wed", abb: "W" },
+        { day: "Thu", abb: "R" },
+        { day: "Fri", abb: "F" },
+        { day: "Sat", abb: "S" },
+        { day: "Sun", abb: "X" }
     ]
     self.times = [
         { time: 800 },
@@ -44,12 +46,9 @@ function courseViewModel() {
         { time: 2000 },
         { time: 2100 },
         { time: 2200 }
-
-
-
     ]
 }
-function course(title,id, startTime, endTime, days) {
+function course(title, id, startTime, endTime, days) {
     var self = this;
     self.title = ko.observable(title);
     self.id = ko.observable(id);
@@ -65,14 +64,23 @@ function course(title,id, startTime, endTime, days) {
             colorIndex--;
         }
     }
-    
-    
+
+
 }
 $(document).ready(function () {
-    ko.applyBindings(cvm,document.getElementById('target'), new courseViewModel());
+    ko.applyBindings(cvm, document.getElementById('target'));
 
     $(document).on('click', '#AddClassButton', function () {
         readForm();
+
+    });
+
+    $(document).on('click', '#addCourse', function () {
+        showForm();
+    });
+
+    $(document).on('click', '#close', function () {
+        closeForm();
     });
 
 });
@@ -81,16 +89,26 @@ function readForm() {
     var courseID = $('#courseID').val();
     var startTime = $('#courseStart').val();
     var endTime = $('#courseEnd').val();
-    var courseDays = $('#courseDays').val();
+    var courseDays = $('#courseDays').val().toUpperCase();
     if (courseID == "" || startTime == "" || endTime == "") {
         alert("Please Fill out the required fields");
     }
     else {
         cvm.courses.push(new course(courseTitle, courseID, startTime, endTime, courseDays));
-        $('#courseTitle').val("");
-        $('#courseID').val("");
-        $('#courseStart').val("");
-        $('#courseEnd').val("");
-        $('#courseDays').val("");
+        closeForm();
     }
+}
+function showForm() {
+    formOpen(true);
+}
+function closeForm() {
+    clearForm();
+    formOpen(false);
+}
+function clearForm() {
+    $('#courseTitle').val("");
+    $('#courseID').val("");
+    $('#courseStart').val("");
+    $('#courseEnd').val("");
+    $('#courseDays').val("");
 }

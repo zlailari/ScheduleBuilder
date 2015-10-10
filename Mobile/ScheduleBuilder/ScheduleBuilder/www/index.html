@@ -7,29 +7,36 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src https://fonts.googleapis.com 'self' 'unsafe-inline'; media-src *">
     <title>ScheduleBuilder</title>
 
     <!-- ScheduleBuilder references -->
     <link href="css/core.css" rel="stylesheet" />
 
+
     <script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="scripts/knockout-3.2.0.js"></script>
     <script type="text/javascript" src="scripts/core.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <body>
+    <div id="header" class="Crimson">
+
+        <div id="addCourse" class="header-icon"><i class="material-icons">add</i></div>
+        <div>Schedule Builder</div>
+    </div>
 
     <div id="target">
-
         <div id="week">
-
             <div class="table-header">
                 <div class="time"></div>
                 <!-- ko foreach: days -->
                 <div data-bind="text: $data.day"></div>
                 <!--/ko-->
             </div>
-            <div>
+            <div class="table-day">
                 <div class="times">
                     <!-- ko foreach: times -->
                     <div data-bind="style:{height: cvm.scalingFactor() + 'px'}">
@@ -39,77 +46,69 @@
 
                     </div>
                     <!--/ko-->
-
-
-
                 </div>
-                <div class="table-day" data-bind="foreach: days">
-                    <div class="day">
-                        <!-- ko foreach: cvm.courses -->
-                        <!-- ko if: days().indexOf($parent.abb) > -1 -->
-                        <div class="course" data-bind="style:
-                                    {
-                                        top: Math.floor((startTime() - 800) / 100) * cvm.scalingFactor() + (startTime() - 800 - Math.floor((startTime() - 800) / 100) * 100) * cvm.scalingFactor() / 60 + 'px',
-                                        height: Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px'
-                                    },
-                                    css: color.color">
-                            <div class="title" data-bind="text: title">
-                            </div>
-                        </div>
-                        <!--/ko-->
-                        <!--/ko-->
-                    </div>
+                <!-- ko foreach: days -->
+                <div class="day">
+                    <!-- ko foreach: cvm.courses -->
+                    <!-- ko if: days().indexOf($parent.abb) > -1 -->
+                    <div class="course" data-bind="style: {top: Math.floor((startTime() - 800) / 100) * cvm.scalingFactor() + (startTime() - 800 - Math.floor((startTime() - 800) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', height: Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', 'line-height': Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px'}, css: color.color"><div class="title" data-bind="text: title"></div></div>
+                    <!--/ko-->
+                    <!--/ko-->
                 </div>
+                <!--/ko-->
+            </div>
+
+        </div>
+        <div id="courseForm" data-bind="visible: formOpen">
+            <div class="container">
+                <div id="close"><i class="material-icons">close</i></div>
+                <span style="font-size:32px; margin-bottom:15px;display:inline-block;">Add a course</span>
+                <table>
+                    <tbody>
+                        <tr><td>Coures title:</td><td><input id="courseTitle" type="text" placeholder="math, com, etc..." size="20" /></td></tr>
+                        <tr><td>Coures CRN:</td><td><input id="courseID" type="text" placeholder="00000" size="5" /></td></tr>
+                        <tr><td>Coures Days:</td><td><input id="courseDays" type="text" placeholder="MWF" size="5" /></td></tr>
+                        <tr><td>Coures Start Time:</td><td><input id="courseStart" type="number" placeholder="0000" size="5" /></td></tr>
+                        <tr><td>Coures End Time:</td><td><input id="courseEnd" type="number" placeholder="0000" size="5" /></td></tr>
+                        <tr><td><input id="AddClassButton" type="button" value="Add Course" /></td></tr>
+                        <!--  <tr><td>Optional information</td></tr>
+                        <tr><td>Coures Title:</td><td><input type="text" placeholder="Intro to..." /></td></tr>
+                        <tr><td>Coures Subject</td><td><input type="text" placeholder="ABS" /></td></tr>
+                        <tr><td>Coures Section:</td><td><input type="text" placeholder="00" /></td></tr>
+                        <tr><td>Coures Number:</td><td><input type="text" placeholder="1234" /></td></tr>
+
+                        <tr><td>Coures Building:</td><td><input type="text" placeholder="111A" /></td></tr>
+                        <tr><td>Coures Room:</td><td><input type="text" placeholder="222" /></td></tr>
+                        <tr><td>Coures Instructor:</td><td><input type="text" placeholder="Guy" /></td></tr>
+
+                          -->
+
+
+
+
+
+                    </tbody>
+                </table>
             </div>
         </div>
+        
         <div class="course-list">
-            <table>
-                <tbody>
-                    <tr><td>Coures title:</td><td><input id="courseTitle" type="text" placeholder="math, com, etc..." size="20" /></td></tr>
-                    <tr><td>Coures CRN:</td><td><input id="courseID" type="text" placeholder="00000" size="5" /></td></tr>
-                    <tr><td>Coures Days:</td><td><input id="courseDays" type="text" placeholder="MWF" size="5" /></td></tr>
-                    <tr><td>Coures Start Time:</td><td><input id="courseStart" type="number" placeholder="0000" size="5" /></td></tr>
-                    <tr><td>Coures End Time:</td><td><input id="courseEnd" type="number" placeholder="0000" size="5" /></td></tr>
-                    <tr><td><input id="AddClassButton" type="button" value="Add Course" /></td></tr>
-                   
-                    <tr><td><input id="FillButton" type="button" value="Fillout" /></td></tr>
-                    <!--  <tr><td>Optional information</td></tr>
-                    <tr><td>Coures Title:</td><td><input type="text" placeholder="Intro to..." /></td></tr>
-                    <tr><td>Coures Subject</td><td><input type="text" placeholder="ABS" /></td></tr>
-                    <tr><td>Coures Section:</td><td><input type="text" placeholder="00" /></td></tr>
-                    <tr><td>Coures Number:</td><td><input type="text" placeholder="1234" /></td></tr>
-
-                    <tr><td>Coures Building:</td><td><input type="text" placeholder="111A" /></td></tr>
-                    <tr><td>Coures Room:</td><td><input type="text" placeholder="222" /></td></tr>
-                    <tr><td>Coures Instructor:</td><td><input type="text" placeholder="Guy" /></td></tr>
-
-                      -->
-
-
-
-
-
-                </tbody>
-            </table>
             <div class="course-output">
-                <span style="font-size:32px; margin-bottom:5px;display:inline-block;">Courses</span>
                 <table>
                     <tbody data-bind="foreach: courses">
                         <tr data-bind="css: color.color">
-                            <td><input type="text" data-bind="value: title" size="20" /></td>
-
-                            <td><input type="text" data-bind="value: id" size="5" /></td>
-
-                            <td><input type="text" data-bind="value: days" size="5" /></td>
-                            <td><input type="number" data-bind="value: startTime" size="4" /></td>
-                            <td><input type="number" data-bind="value: endTime" size="4" /></td>
+                            <td><div  data-bind="html: title"></div></td>
+                            <td><div  data-bind="html: id"></div></td>
+                            <td><div data-bind="html: days"></div></td>
+                            <td><div data-bind="html: startTime" ></div></td>
+                            <td><div data-bind="html: endTime" ></div></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+            
     </div>
-
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="cordova.js"></script>
     <script src="scripts/platformOverrides.js"></script>

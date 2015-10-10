@@ -1,7 +1,7 @@
 "use strict";
 var cvm = new courseViewModel();
-var width = ko.observable(100);
 var colorIndex = 0;
+var formOpen = ko.observable(false);
 var colors = colors = [
         { color: "Cobalt" },
         { color: "Crimson" },
@@ -19,7 +19,7 @@ function courseViewModel() {
     var self = this;
     self.courses = ko.observableArray();
     self.scalingFactor = ko.observable();
-    self.scalingFactor(20);
+    self.scalingFactor(30);
     self.days = [
         { day: "Mon", abb: "M" },
         { day: "Tue", abb: "T" },
@@ -72,14 +72,17 @@ function course(title,id, startTime, endTime, days) {
 $(document).ready(function () {
     ko.applyBindings(cvm,document.getElementById('target'), new courseViewModel());
 
-    width(document.getElementById('week').offsetWidth);
-    console.log(width());
-
     $(document).on('click', '#AddClassButton', function () {
         readForm();
+       
     });
-    $(document).on('click', '#FillButton', function () {
-        fillOutForm();
+
+    $(document).on('click', '#addCourse', function () {
+        showForm();
+    });
+
+    $(document).on('click', '#close', function () {
+       closeForm();
     });
 
 });
@@ -88,23 +91,26 @@ function readForm() {
     var courseID = $('#courseID').val();
     var startTime = $('#courseStart').val();
     var endTime = $('#courseEnd').val();
-    var courseDays = $('#courseDays').val();
+    var courseDays = $('#courseDays').val().toUpperCase();
     if (courseID == "" || startTime == "" || endTime == "") {
         alert("Please Fill out the required fields");
     }
     else {
         cvm.courses.push(new course(courseTitle, courseID, startTime, endTime, courseDays));
-        $('#courseTitle').val("math");
-        $('#courseID').val(12345);
-        $('#courseStart').val(900);
-        $('#courseEnd').val(1000);
-        $('#courseDays').val("MWF");
+        closeForm();
     }
 }
-function fillOutForm() {
-    $('#courseTitle').val("math");
-    $('#courseID').val(12345);
-    $('#courseStart').val(900);
-    $('#courseEnd').val(1000);
-    $('#courseDays').val("MWF");
+function showForm() {
+    formOpen(true);
+}
+function closeForm() {
+    clearForm();
+    formOpen(false);
+}
+function clearForm() {
+    $('#courseTitle').val("");
+    $('#courseID').val("");
+    $('#courseStart').val("");
+    $('#courseEnd').val("");
+    $('#courseDays').val("");
 }
