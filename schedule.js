@@ -1,80 +1,9 @@
-// function DataEntry(title, id, teacher, startTime, endTime, days) {
-// 	this.title = title;
-// 	this.id =  id;
-// 	this.teacher = teacher;
-// 	this.occu=[];
-// 	this.startTime = startTime;
-// 	this.endTime=endTime;
-// 	this.days=days;
-// }
-//test1 : c1, c2 no conflicts, same class, should not show two
-// test 2: conflicts, 
-var c1 = {
-    id: '2010',
-    title: 'compiler theory',
-    occu: [{
-        st: '1100',
-        et: '1150',
-        days: 'MWF'
-    }]
-}
+// Finds schedules with the given title constraints
 
-var c2 = {
-    id: '3415',
-    title: 'compiler theory',
-    occu: [{
-        st: '1500',
-        et: '1550',
-        days: 'MWF'
-    }]
-}
-
-
-var c3 = {
-    id: '3133',
-    title: 'software engineering',
-    occu: [{
-        st: '1600',
-        et: '1650',
-        days: 'MWF'
-    }]
-}
-
-var c4 = {
-    id: '4111',
-    title: 'software testing',
-    occu: [{
-        st: '1700',
-        et: '1750',
-        days: 'MWF'
-    }]
-}
-
-var c5 = {
-    id: '5098',
-    title: 'software testing',
-    occu: [{
-        st: '1630',
-        et: '1640',
-        days: 'WF'
-    }]
-}
-
-//courses
-// var database = {
-//         'software engineering': [{occu: {}},{occu:}],
-//         'compiler theory': []
-// }
-// db = [];
-// db.push(c1);
-// db.push(c2);
-// db.push(c3);
-// db.push(c4);
-// db.push(c5);
 db = coursesArray;
 
 // var titles = ['software engineering', 'compiler theory', 'software testing']; //, 'compiler theory'
-var titles = ['Materials Laboratory', 'Intro to Human Factors', 'Advanced Human Factors']
+var titles = ['Materials Laboratory', 'Intro to Human Factors', 'Advanced Human Factors', 'Aviation Security', 'Aviation Statistics']
 
 var stationary = {};
 var options = [];
@@ -82,7 +11,6 @@ var schedule = [];
 for (i = 0; i < titles.length; i++) {
     stationary[titles[i]] = [];
 }
-console.log(stationary);
 
 function cartesian(arg) {
     var r = [],
@@ -135,16 +63,11 @@ function solve(db, titles) {
             }
         }
     }
-    console.log('stationary:');
-    console.log(stationary);
 
-    // console.log(cartesian(options));
     for (var i in stationary) {
         options.push(stationary[i]);
     }
-    //console.log('options');
     options = cartesian(options)
-    //console.log(options);
 
     var time1 = []; //monday
     var time2 = [];
@@ -158,25 +81,8 @@ function solve(db, titles) {
     for (var o in options) { //0 ,1, 2 
         //each possible schedule	
         for (var m in options[o]) {
-            // console.log('options[o][m] :');
-            // {
-            //     id: '3',
-            //     title: 'software engineering',
-            //     occu: [{
-            //         st: '1600',
-            //         et: '1650',
-            //         days: 'MWF'
-            //     }, {
-            //         st: '1000',
-            //         et: '1050',
-            //         days: 'T'
-            //     }]
-            // }
 
             for (v in options[o][m].occu) {
-                // console.log('options om :');
-                // console.log(options[o][m]);
-                // console.log(options[o][m]);
                 if (options[o][m].occu[v].days.indexOf('M') > -1) {
                     time1.push(options[o][m].occu[v].st);
                     time1.push(options[o][m].occu[v].end);
@@ -201,27 +107,14 @@ function solve(db, titles) {
                     time6.push(options[o][m].occu[v].st);
                     time6.push(options[o][m].occu[v].end);
                 }
-                //console.log(options[o][m].occu[v].st);
-                //console.log(options[o][m].occu[v].et);
-                // console.log();
             }
-            //console.log('----');
             solutions.push(options[o][m].CRN);
-           	// if(options[o][m].id=='')
-           	//console.log('********');
-            //	console.log(options[o][m].id);
         }
-        console.log('solution');
-        //console.log(solution);
-        console.log('time1');
-        console.log(time1);
         flag = !multipleDateRangeOverlaps(time1) &&
             !multipleDateRangeOverlaps(time2) && !multipleDateRangeOverlaps(time3) &&
             !multipleDateRangeOverlaps(time4) && !multipleDateRangeOverlaps(time5) && !multipleDateRangeOverlaps(time6);
-        //console.log(flag);
         //check time
         if (flag) {
-            //console.log('one solution: ' + solution);
             solutions = solutions +' ';
             schedule.push({id:solutions});
         }
@@ -234,12 +127,9 @@ function solve(db, titles) {
         time6 = [];
         solutions = [];
     }
-    // console.log('schedule');
-    // console.log(schedule);
     return schedule;
 
 }
 
-
 var s = solve(db, titles);
-console.log(s);
+console.log(s)
