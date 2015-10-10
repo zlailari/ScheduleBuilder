@@ -1,5 +1,8 @@
 "use strict";
 var cvm = new courseViewModel();
+
+var data = JSON.parse(courses);
+
 var colorIndex = 0;
 var colors = colors = [
         { color: "Cobalt" },
