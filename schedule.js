@@ -73,7 +73,9 @@ var c5 = {
 // db.push(c5);
 db = coursesArray;
 
-var titles = ['software engineering', 'compiler theory', 'software testing']; //, 'compiler theory'
+// var titles = ['software engineering', 'compiler theory', 'software testing']; //, 'compiler theory'
+var titles = ['Materials Laboratory', 'Intro to Human Factors', 'Advanced Human Factors']
+
 var stationary = {};
 var options = [];
 var schedule = [];
@@ -127,8 +129,8 @@ function multipleDateRangeOverlaps(arguments) {
 function solve(db, titles) {
     for (i = 0; i < titles.length; i++) {
         for (j = 0; j < db.length; j++) {
-            if (titles[i] == db[j].title) {
-                stationary[id[i]].push(db[j]);//id
+            if (titles[i] == db[j].TITLE) {
+                stationary[titles[i]].push(db[j]);//id
                 // options.push(db[j]);
             }
         }
@@ -177,34 +179,34 @@ function solve(db, titles) {
                 // console.log(options[o][m]);
                 if (options[o][m].occu[v].days.indexOf('M') > -1) {
                     time1.push(options[o][m].occu[v].st);
-                    time1.push(options[o][m].occu[v].et);
+                    time1.push(options[o][m].occu[v].end);
                 }
                 if (options[o][m].occu[v].days.indexOf('T') > -1) {
                     time2.push(options[o][m].occu[v].st);
-                    time2.push(options[o][m].occu[v].et);
+                    time2.push(options[o][m].occu[v].end);
                 }
                 if (options[o][m].occu[v].days.indexOf('W') > -1) {
                     time3.push(options[o][m].occu[v].st);
-                    time3.push(options[o][m].occu[v].et);
+                    time3.push(options[o][m].occu[v].end);
                 }
                 if (options[o][m].occu[v].days.indexOf('R') > -1) {
                     time4.push(options[o][m].occu[v].st);
-                    time4.push(options[o][m].occu[v].et);
+                    time4.push(options[o][m].occu[v].end);
                 }
                 if (options[o][m].occu[v].days.indexOf('F') > -1) {
                     time5.push(options[o][m].occu[v].st);
-                    time5.push(options[o][m].occu[v].et);
+                    time5.push(options[o][m].occu[v].end);
                 }
                 if (options[o][m].occu[v].days.indexOf('S') > -1) {
                     time6.push(options[o][m].occu[v].st);
-                    time6.push(options[o][m].occu[v].et);
+                    time6.push(options[o][m].occu[v].end);
                 }
                 //console.log(options[o][m].occu[v].st);
                 //console.log(options[o][m].occu[v].et);
                 // console.log();
             }
             //console.log('----');
-            solutions.push(options[o][m].id);
+            solutions.push(options[o][m].CRN);
            	// if(options[o][m].id=='')
            	//console.log('********');
             //	console.log(options[o][m].id);
@@ -239,5 +241,5 @@ function solve(db, titles) {
 }
 
 
-var s = solve(db, id);
+var s = solve(db, titles);
 console.log(s);
