@@ -1,0 +1,54 @@
+#header {
+    position: inherit;
+}
+
+#schedule .material-icons {
+    text-align: center;
+    width: 20px;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+#about:hover {
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+#schedule:hover {
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.about {
+    position:relative;
+    width:100%;
+    text-align: center;
+}
+.about h1 {
+    font-size: 2em;
+    color: #000000;
+}
+.about p {
+    font-size: 1.2em;
+    line-height: 120%;
+    color: black;
+    margin-top: 0.5em;
+}
+.about .profiles h2{
+    color: black;
+    text-decoration: none;
+}
+.about .profiles img {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+    height: 14em;
+    text-align: center;
+}
+.about .profiles .person {
+    display: inline-block;
+}
