@@ -7,8 +7,8 @@
     <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="knockout-3.2.0.js"></script>
     <script type="text/javascript" src="courses.json"></script>
-    <script type="text/javascript" src="core.js"></script>
     <script type="text/javascript" src="schedule.js"></script>
+    <script type="text/javascript" src="core.js"></script>
     <link rel="stylesheet" type="text/css" href="core.css" />
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -22,8 +22,9 @@
     </div>
 
     <div id="target">
+        <div data-bind="text: cvm.schedules().length"></div>
         <div id="week">
-            <!-- ko foreach: schedules -->
+            <!-- ko foreach: cvm.schedules -->
             <div class="table-header">
                 <div class="time"></div>
                 <!-- ko foreach: cvm.days -->
@@ -44,7 +45,8 @@
                 </div>
                 <!-- ko foreach: cvm.days -->
                 <div class="day">
-                    <!-- ko foreach: [] -->
+                    <div data-bind="text: $parents[0].courses.length"></div>
+                    <!-- ko foreach: $data.courses -->
                     <!-- ko if: days().indexOf($parent.abb) > -1 -->
                     <div class="course" data-bind="style: {top: Math.floor((startTime() - 800) / 100) * cvm.scalingFactor() + (startTime() - 800 - Math.floor((startTime() - 800) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', height: Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', 'line-height': Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px'}, css: color.color"><div class="title" data-bind="text: title"></div></div>
                     <!--/ko-->

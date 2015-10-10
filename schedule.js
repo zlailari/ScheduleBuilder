@@ -1,16 +1,11 @@
 // Finds schedules with the given title constraints
 
-db = coursesArray;
 
 // var titles = ['software engineering', 'compiler theory', 'software testing']; //, 'compiler theory'
-var titles = ['Materials Laboratory', 'Intro to Human Factors', 'Advanced Human Factors', 'Aviation Security', 'Aviation Statistics']
+//var titles = ['Materials Laboratory', 'Intro to Human Factors', 'Advanced Human Factors', 'Aviation Security', 'Aviation Statistics']
 
-var stationary = {};
-var options = [];
-var schedule = [];
-for (i = 0; i < titles.length; i++) {
-    stationary[titles[i]] = [];
-}
+
+
 
 function cartesian(arg) {
     var r = [],
@@ -54,7 +49,15 @@ function multipleDateRangeOverlaps(arguments) {
     return false; //no overlap
 }
 
-function solve(db, titles) {
+function solve(titles) {
+    var options = [];
+    var schedule = [];
+    var stationary = {};
+    for (i = 0; i < titles.length; i++) {
+        stationary[titles[i]] = [];
+    }
+
+    var db = coursesArray;
     for (i = 0; i < titles.length; i++) {
         for (j = 0; j < db.length; j++) {
             if (titles[i] == db[j].TITLE) {
@@ -131,5 +134,5 @@ function solve(db, titles) {
 
 }
 
-var s = solve(db, titles);
-console.log(s)
+//var s = solve(db, titles);
+//console.log(s)

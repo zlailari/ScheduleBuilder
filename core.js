@@ -23,7 +23,7 @@ var colors = colors = [
 function scheduleViewModel() {
     var self = this;
     //self.courses = ko.observableArray();
-    self.courseList = ko.observableArray();
+    self.courseList = [];
     self.schedules = ko.observableArray();
     self.scalingFactor = ko.observable();
     self.scalingFactor(30);
@@ -54,7 +54,7 @@ function scheduleViewModel() {
         { time: 2200 }
     ];
 }
-function schedule() {
+function scheduleObject() {
     var self = this;
     self.courses = ko.observableArray();
 }
@@ -63,7 +63,7 @@ function schedule() {
 function lookup(CRN) {
     for (var i=0; i<data.length; i++) {
         if (data[i].CRN == CRN) {
-            return data[i]
+            return data[i];
         }
     }
     return 'NONE'
@@ -117,7 +117,15 @@ function readForm() {
 
         }
     }
-
+    cvm.courseList.push(courseTitle);
+    console.log(cvm.courseList);
+    var result = solve(['Materials Laboratory', 'Intro to Human Factors']);
+    console.log(result);
+    var newSchedule = new scheduleObject();
+    for (var index = 0; index < result.length; index++) {
+        newSchedule.courses().push(lookup(result[index]));
+    }
+    console.log(newSchedule.courses().length);
    /* var courseID = $('#courseID').val();
     var startTime = $('#courseStart').val();
     var endTime = $('#courseEnd').val();
@@ -127,8 +135,9 @@ function readForm() {
     }
     else {*/
         //cvm.courses.push(new course(courseTitle, courseID, startTime, endTime, courseDays));
-    cvm.courseList.push({'title': courseTitle });
+    cvm.schedules.push(newSchedule);
 
+    console.log(cvm.schedules().length);
     closeForm();
     //}
 }
