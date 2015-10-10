@@ -4,7 +4,6 @@ var cvm = new scheduleViewModel();
 
 var data = coursesArray;
 
-
 var colorIndex = 0;
 var formOpen = ko.observable(false);
 var schedules = ko.observableArray();
@@ -23,7 +22,9 @@ var colors = colors = [
 
 function scheduleViewModel() {
     var self = this;
-    self.courses = ko.observableArray();
+    //self.courses = ko.observableArray();
+    self.courseList = ko.observableArray();
+    self.schedules = ko.observableArray();
     self.scalingFactor = ko.observable();
     self.scalingFactor(30);
     self.days = [
@@ -34,7 +35,7 @@ function scheduleViewModel() {
         { day: "Fri", abb: "F" },
         { day: "Sat", abb: "S" },
         { day: "Sun", abb: "X" }
-    ]
+    ];
     self.times = [
         { time: 800 },
         { time: 900 },
@@ -51,8 +52,13 @@ function scheduleViewModel() {
         { time: 2000 },
         { time: 2100 },
         { time: 2200 }
-    ]
+    ];
 }
+function schedule() {
+    var self = this;
+    self.courses = ko.observableArray();
+}
+
 function course(title, id, startTime, endTime, days) {
     var self = this;
     self.title = ko.observable(title);
@@ -63,12 +69,13 @@ function course(title, id, startTime, endTime, days) {
     self.height = ko.observable(self.endTime() - self.startTime());
     self.color = colors[colorIndex];
     colorIndex++;
+    /*
     for (var index = 0; index < cvm.courses().length; index++) {
         if (self.id == cvm.courses()[index].id) {
             self.color = cvm.courses()[index].color;
             colorIndex--;
         }
-    }
+    }*/
 
 
 }
@@ -91,18 +98,38 @@ $(document).ready(function () {
 });
 function readForm() {
     var courseTitle = $('#courseTitle').val();
-    var courseID = $('#courseID').val();
+    for (var i = 0; i < coursesArray.length; i++) {
+        if (coursesArray[i].TITLE == courseTitle) {
+            console.log(coursesArray[i].TITLE);
+
+        }
+    }
+
+   /* var courseID = $('#courseID').val();
     var startTime = $('#courseStart').val();
     var endTime = $('#courseEnd').val();
     var courseDays = $('#courseDays').val().toUpperCase();
     if (courseID == "" || startTime == "" || endTime == "") {
         alert("Please Fill out the required fields");
     }
-    else {
-        cvm.courses.push(new course(courseTitle, courseID, startTime, endTime, courseDays));
-        closeForm();
+    else {*/
+        //cvm.courses.push(new course(courseTitle, courseID, startTime, endTime, courseDays));
+    cvm.courseList.push({'title': courseTitle });
+
+    closeForm();
+    //}
+}
+
+function computeSchedule() {
+    for (var i = 0; i < coursesArray.length; i++) {
+        if (coursesArray[i].TITLE == courseTitle) {
+            console.log(coursesArray[i].TITLE);
+
+        }
     }
 }
+
+
 function showForm() {
     formOpen(true);
 }
