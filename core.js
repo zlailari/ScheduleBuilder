@@ -1,5 +1,10 @@
 "use strict";
+
 var cvm = new scheduleViewModel();
+
+var data = coursesArray;
+
+
 var colorIndex = 0;
 var formOpen = ko.observable(false);
 var schedules = ko.observableArray();
