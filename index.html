@@ -22,16 +22,21 @@
     </div>
 
     <div id="target">
-        <div data-bind="text: cvm.schedules().length"></div>
+        
         <div id="week">
             <!-- ko foreach: cvm.schedules -->
+            <div style="font-size:32px; margin-bottom:15px; margin-top:15px;display:inline-block;" >Schedule</div>
+            
+            <!-- ko foreach: courses-->
+            <div data-bind="text: ko.toJSON($data.CRN, null, 2)"></div>
+            <!-- /ko -->
             <div class="table-header">
                 <div class="time"></div>
                 <!-- ko foreach: cvm.days -->
                 <div data-bind="text: $data.day"></div>
                 <!--/ko-->
             </div>
-            
+
             <div class="table-day">
                 <div class="times">
                     <!-- ko foreach: cvm.times -->
@@ -45,19 +50,25 @@
                 </div>
                 <!-- ko foreach: cvm.days -->
                 <div class="day">
-                    <div data-bind="text: $parents[0].courses.length"></div>
-                    <!-- ko foreach: $data.courses -->
-                    <!-- ko if: days().indexOf($parent.abb) > -1 -->
-                    <div class="course" data-bind="style: {top: Math.floor((startTime() - 800) / 100) * cvm.scalingFactor() + (startTime() - 800 - Math.floor((startTime() - 800) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', height: Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', 'line-height': Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px'}, css: color.color"><div class="title" data-bind="text: title"></div></div>
+                    <!-- <div data-bind="text: ko.toJSON($parent.courses, null, 2)"></div>-->
+                    <!-- ko foreach: $parent.courses -->
+                    <!-- <div data-bind="text: ko.toJSON(occu, null, 2)"></div>-->
+                    <!-- ko foreach: occu-->
+                    <!--<div data-bind="text: ko.toJSON(days, null, 2)"></div>-->
+                    <!-- ko foreach: days-->
+                    <!-- ko if: $data.indexOf($parents[2].abb) > -1 -->
+                    <div class="course Crimson" data-bind="style: {top: Math.floor(($parent.st - 800) / 100) * cvm.scalingFactor() + ($parent.st - 800 - Math.floor(($parent.st - 800) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', height: Math.floor(($parent.end- $parent.st) / 100) * cvm.scalingFactor() + ($parent.end - $parent.st - Math.floor(($parent.end - $parent.st) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', 'line-height': Math.floor(($parent.end- $parent.st) / 100) * cvm.scalingFactor() + ($parent.end - $parent.st - Math.floor(($parent.end - $parent.st) / 100) * 100) * cvm.scalingFactor() / 60 + 'px'}"><div class="title" data-bind="text: $parents[1].TITLE"></div></div>
+                    <!--/ko-->
+                    <!--/ko-->
                     <!--/ko-->
                     <!--/ko-->
                 </div>
                 <!--/ko-->
             </div>
-            
+
             <!--/ko-->
         </div>
-        
+
         <div id="courseForm" data-bind="visible: formOpen">
             <div class="container">
                 <div id="close"><i class="material-icons">close</i></div>

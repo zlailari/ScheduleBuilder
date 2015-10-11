@@ -110,6 +110,7 @@ $(document).ready(function () {
     });
 });
 function readForm() {
+    cvm.schedules.removeAll();
     var courseTitle = $('#courseTitle').val();
     for (var i = 0; i < coursesArray.length; i++) {
         if (coursesArray[i].TITLE == courseTitle) {
@@ -119,11 +120,22 @@ function readForm() {
     }
     cvm.courseList.push(courseTitle);
     console.log(cvm.courseList);
-    var result = solve(['Materials Laboratory', 'Intro to Human Factors']);
+    var result = solve(cvm.courseList);
     console.log(result);
-    var newSchedule = new scheduleObject();
+   
+    
     for (var index = 0; index < result.length; index++) {
-        newSchedule.courses().push(lookup(result[index]));
+        var newSchedule = new scheduleObject();
+        var cs = result[index].id.split(',');
+        for (var x = 0; x < cs.length; x++){
+           
+            console.log(":" + $.trim(cs[x]) + ":");
+            var csn = $.trim(cs[x]);
+            newSchedule.courses().push(lookup(csn));
+            console.log(lookup(csn));
+        }
+        cvm.schedules.push(newSchedule);
+       
     }
     console.log(newSchedule.courses().length);
    /* var courseID = $('#courseID').val();
@@ -135,7 +147,7 @@ function readForm() {
     }
     else {*/
         //cvm.courses.push(new course(courseTitle, courseID, startTime, endTime, courseDays));
-    cvm.schedules.push(newSchedule);
+    
 
     console.log(cvm.schedules().length);
     closeForm();
