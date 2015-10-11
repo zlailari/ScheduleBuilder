@@ -13,9 +13,10 @@
     <!-- ScheduleBuilder references -->
     <link href="css/core.css" rel="stylesheet" />
 
-
+    <script type="text/javascript" src="scripts/courses.json"></script>
     <script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="scripts/knockout-3.2.0.js"></script>
+    <script type="text/javascript" src="scripts/schedule.js"></script>
     <script type="text/javascript" src="scripts/core.js"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -23,42 +24,59 @@
 </head>
 <body>
     <div id="header" class="Crimson">
-
         <div id="addCourse" class="header-icon"><i class="material-icons">add</i></div>
-        <div>Schedule Builder</div>
+        <div id="scheduleBuilder">Schedule Builder</div>
+        <div id="aboutPage">About</div>
     </div>
 
     <div id="target">
+
         <div id="week">
+            <!-- ko foreach: cvm.schedules -->
+            <div style="font-size:32px; margin-bottom:15px; margin-top:15px;display:inline-block;">Schedule</div>
+
+            <!-- ko foreach: courses-->
+            <div data-bind="text: ko.toJSON($data.CRN, null, 2)"></div>
+            <!-- /ko -->
             <div class="table-header">
                 <div class="time"></div>
-                <!-- ko foreach: days -->
+                <!-- ko foreach: cvm.days -->
                 <div data-bind="text: $data.day"></div>
                 <!--/ko-->
             </div>
+
             <div class="table-day">
                 <div class="times">
-                    <!-- ko foreach: times -->
+                    <!-- ko foreach: cvm.times -->
                     <div data-bind="style:{height: cvm.scalingFactor() + 'px'}">
                         <div class="line"></div>
-                        <span data-bind="text: time"></span>
+                        <span data-bind="text: time, style: {'line-height': cvm.scalingFactor() + 'px'}"></span>
 
 
                     </div>
                     <!--/ko-->
                 </div>
-                <!-- ko foreach: days -->
+                <!-- ko foreach: cvm.days -->
                 <div class="day">
-                    <!-- ko foreach: cvm.courses -->
-                    <!-- ko if: days().indexOf($parent.abb) > -1 -->
-                    <div class="course" data-bind="style: {top: Math.floor((startTime() - 800) / 100) * cvm.scalingFactor() + (startTime() - 800 - Math.floor((startTime() - 800) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', height: Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', 'line-height': Math.floor((endTime()- startTime()) / 100) * cvm.scalingFactor() + (endTime() - startTime() - Math.floor((endTime() - startTime()) / 100) * 100) * cvm.scalingFactor() / 60 + 'px'}, css: color.color"><div class="title" data-bind="text: title"></div></div>
+                    <!-- <div data-bind="text: ko.toJSON($parent.courses, null, 2)"></div>-->
+                    <!-- ko foreach: $parent.courses -->
+                    <!-- <div data-bind="text: ko.toJSON(occu, null, 2)"></div>-->
+                    <!-- ko foreach: occu-->
+                    <!--<div data-bind="text: ko.toJSON(days, null, 2)"></div>-->
+                    <!-- ko foreach: days-->
+                    <!-- ko if: $data.indexOf($parents[2].abb) > -1 -->
+                    <div class="course Crimson" data-bind="style: {top: Math.floor(($parent.st - 800) / 100) * cvm.scalingFactor() + ($parent.st - 800 - Math.floor(($parent.st - 800) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', height: Math.floor(($parent.end- $parent.st) / 100) * cvm.scalingFactor() + ($parent.end - $parent.st - Math.floor(($parent.end - $parent.st) / 100) * 100) * cvm.scalingFactor() / 60 + 'px', 'line-height': Math.floor(($parent.end- $parent.st) / 100) * cvm.scalingFactor() + ($parent.end - $parent.st - Math.floor(($parent.end - $parent.st) / 100) * 100) * cvm.scalingFactor() / 60 + 'px'}"><div class="title" data-bind="text: $parents[1].TITLE"></div></div>
+                    <!--/ko-->
+                    <!--/ko-->
                     <!--/ko-->
                     <!--/ko-->
                 </div>
                 <!--/ko-->
             </div>
 
+            <!--/ko-->
         </div>
+
         <div id="courseForm" data-bind="visible: formOpen">
             <div class="container">
                 <div id="close"><i class="material-icons">close</i></div>
@@ -66,12 +84,12 @@
                 <table>
                     <tbody>
                         <tr><td>Coures title:</td><td><input id="courseTitle" type="text" placeholder="math, com, etc..." size="20" /></td></tr>
-                        <tr><td>Coures CRN:</td><td><input id="courseID" type="text" placeholder="00000" size="5" /></td></tr>
+                        <!--<tr><td>Coures CRN:</td><td><input id="courseID" type="text" placeholder="00000" size="5" /></td></tr>
                         <tr><td>Coures Days:</td><td><input id="courseDays" type="text" placeholder="MWF" size="5" /></td></tr>
                         <tr><td>Coures Start Time:</td><td><input id="courseStart" type="number" placeholder="0000" size="5" /></td></tr>
                         <tr><td>Coures End Time:</td><td><input id="courseEnd" type="number" placeholder="0000" size="5" /></td></tr>
                         <tr><td><input id="AddClassButton" type="button" value="Add Course" /></td></tr>
-                        <!--  <tr><td>Optional information</td></tr>
+                        <tr><td>Optional information</td></tr>
                         <tr><td>Coures Title:</td><td><input type="text" placeholder="Intro to..." /></td></tr>
                         <tr><td>Coures Subject</td><td><input type="text" placeholder="ABS" /></td></tr>
                         <tr><td>Coures Section:</td><td><input type="text" placeholder="00" /></td></tr>
@@ -80,34 +98,33 @@
                         <tr><td>Coures Building:</td><td><input type="text" placeholder="111A" /></td></tr>
                         <tr><td>Coures Room:</td><td><input type="text" placeholder="222" /></td></tr>
                         <tr><td>Coures Instructor:</td><td><input type="text" placeholder="Guy" /></td></tr>
-
                           -->
 
-
-
-
-
+                        <tr><td><input id="AddClassButton" type="button" value="Add Course" /></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
         <div class="course-list">
+            <ul data-bind="foreach: courseList">
+                <li data-bind="text: title"></li>
+            </ul>
             <div class="course-output">
                 <table>
-                    <tbody data-bind="foreach: courses">
+                    <!--<tbody data-bind="foreach: courses">
                         <tr data-bind="css: color.color">
-                            <td><div  data-bind="html: title"></div></td>
-                            <td><div  data-bind="html: id"></div></td>
+                            <td><div data-bind="html: title"></div></td>
+                            <td><div data-bind="html: id"></div></td>
                             <td><div data-bind="html: days"></div></td>
-                            <td><div data-bind="html: startTime" ></div></td>
-                            <td><div data-bind="html: endTime" ></div></td>
+                            <td><div data-bind="html: startTime"></div></td>
+                            <td><div data-bind="html: endTime"></div></td>
                         </tr>
-                    </tbody>
+                    </tbody>-->
                 </table>
             </div>
         </div>
-            
+
     </div>
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="cordova.js"></script>

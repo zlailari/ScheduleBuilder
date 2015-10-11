@@ -516,25 +516,38 @@ th {
     width: 100%;
 }
 
-    #header div {
-        float: left;
-        line-height: 40px;
-        margin-right: 10px;
-    }
+#aboutPage:hover {
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.3);
+}
 
-    #header .header-icon {
-        margin: 0;
-    }
+#scheduleBuilder:hover {
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.3);
+}
 
-        #header .header-icon .material-icons {
-            text-align: center;
-            width: 40px;
-            line-height: 40px;
-            cursor: pointer;
-        }
+#header div {
+    float: left;
+    line-height: 40px;
+    margin-right: 10px;
+}
+
+#header .header-icon {
+    margin: 0;
+}
+
+#header .header-icon .material-icons {
+    text-align: center;
+    width: 30px;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+#header .header-icon .material-icons:hover {
+    background-color: rgba(255, 0, 0, 0.3);
+}
 
 #week {
-    padding-top: 40px;
     margin-right: 45px;
     width: 100%;
     display: inline-block;
@@ -545,6 +558,7 @@ th {
     }
 
 .table-header {
+    margin-top:40px;
     margin-bottom: 5px;
     display: inline-block;
     width: 100%;
